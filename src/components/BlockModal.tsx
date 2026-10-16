@@ -17,12 +17,12 @@ interface BlockModalProps {
 const PRESET_DURATIONS = [15, 30, 45, 60, 90, 120];
 
 const SUGGESTED_TITLES = [
-  'Deep Code Sprint',
-  'Architecture Refactor',
-  'Design Review & Polish',
-  'Client Alignment Call',
-  'Zero Inbox & Communications',
-  'Strategy & Planning',
+  'Sprint de Código',
+  'Refatoração de Arquitetura',
+  'Revisão de Design & Polimento',
+  'Alinhamento com Cliente',
+  'Zerar Caixa de Entrada',
+  'Planejamento Estratégico',
 ];
 
 export const BlockModal: React.FC<BlockModalProps> = ({
@@ -87,18 +87,18 @@ export const BlockModal: React.FC<BlockModalProps> = ({
     <BottomSheet
       isOpen={isOpen}
       onClose={onClose}
-      title={editBlock ? 'Modify Time-Block' : 'Schedule Precision Block'}
+      title={editBlock ? 'Modificar Bloco de Tempo' : 'Agendar Bloco de Foco'}
     >
       <form onSubmit={handleSubmit} className="space-y-4 pt-1">
         {/* Title Input */}
         <div>
           <label className="text-[11px] font-medium text-slate-400 block mb-1">
-            Focus Directive / Task Title
+            Diretiva de Foco / Título da Tarefa
           </label>
           <input
             type="text"
             required
-            placeholder="e.g., Deep Architecture Sprint"
+            placeholder="ex: Sprint de Foco Profundo"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             className="w-full px-3 py-2 text-sm rounded-xl bg-[#0b1326] border border-slate-700 text-white placeholder-slate-600 focus:outline-none focus:border-indigo-500"
@@ -125,7 +125,7 @@ export const BlockModal: React.FC<BlockModalProps> = ({
         {/* Category Picker */}
         <div>
           <label className="text-[11px] font-medium text-slate-400 block mb-1.5">
-            Temporal Category
+            Categoria Temporal
           </label>
           <div className="grid grid-cols-2 gap-2">
             {(Object.keys(CATEGORIES) as BlockCategory[]).map((catKey) => {
@@ -161,7 +161,7 @@ export const BlockModal: React.FC<BlockModalProps> = ({
         <div className="grid grid-cols-2 gap-3">
           <div>
             <label className="text-[11px] font-medium text-slate-400 block mb-1">
-              Start Time
+              Horário de Início
             </label>
             <input
               type="time"
@@ -174,7 +174,7 @@ export const BlockModal: React.FC<BlockModalProps> = ({
 
           <div>
             <label className="text-[11px] font-medium text-slate-400 block mb-1">
-              End Time (Calculated)
+              Horário de Término (Calculado)
             </label>
             <div className="w-full px-3 py-2 text-xs rounded-xl bg-[#0b1326]/60 border border-slate-800 text-indigo-300 font-mono-numbers font-semibold">
               {calculateEndTime()}
@@ -185,7 +185,7 @@ export const BlockModal: React.FC<BlockModalProps> = ({
         {/* Duration Presets */}
         <div>
           <label className="text-[11px] font-medium text-slate-400 block mb-1.5">
-            Duration Span
+            Duração
           </label>
           <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar">
             {PRESET_DURATIONS.map((mins) => (
@@ -211,11 +211,11 @@ export const BlockModal: React.FC<BlockModalProps> = ({
         {/* Notes */}
         <div>
           <label className="text-[11px] font-medium text-slate-400 block mb-1">
-            Execution Notes & Micro-Deliverables
+            Notas de Execução & Micro-Entregas
           </label>
           <textarea
             rows={2}
-            placeholder="Sub-tasks, links, or success criteria..."
+            placeholder="Subtarefas, links ou critérios de sucesso..."
             value={notes}
             onChange={(e) => setNotes(e.target.value)}
             className="w-full px-3 py-2 text-xs rounded-xl bg-[#0b1326] border border-slate-700 text-white placeholder-slate-600 focus:outline-none focus:border-indigo-500 resize-none"
@@ -228,7 +228,7 @@ export const BlockModal: React.FC<BlockModalProps> = ({
           className="w-full py-3 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold shadow-lg shadow-indigo-950/60 active:scale-98 transition-all flex items-center justify-center gap-2"
         >
           <Check className="w-4 h-4 stroke-[3]" />
-          <span>{editBlock ? 'Update Time-Block' : 'Anchor to Schedule'}</span>
+          <span>{editBlock ? 'Atualizar Bloco de Tempo' : 'Fixar no Cronograma'}</span>
         </button>
       </form>
     </BottomSheet>

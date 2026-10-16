@@ -18,10 +18,10 @@ export const BottomTabBar: React.FC<BottomTabBarProps> = ({
   isTimerActive,
 }) => {
   const tabs = [
-    { key: 'timeline' as TabKey, label: 'Timeline', icon: Clock },
-    { key: 'focus' as TabKey, label: 'Focus', icon: Timer, badge: isTimerActive },
-    { key: 'protocols' as TabKey, label: 'Protocols', icon: CheckSquare },
-    { key: 'analytics' as TabKey, label: 'Telemetry', icon: BarChart2 },
+    { key: 'timeline' as TabKey, label: 'Cronograma', icon: Clock },
+    { key: 'focus' as TabKey, label: 'Foco', icon: Timer, badge: isTimerActive },
+    { key: 'protocols' as TabKey, label: 'Protocolos', icon: CheckSquare },
+    { key: 'analytics' as TabKey, label: 'Telemetria', icon: BarChart2 },
   ];
 
   return (
@@ -73,7 +73,7 @@ export const BottomTabBar: React.FC<BottomTabBarProps> = ({
               triggerHaptic('medium');
               onQuickAdd();
             }}
-            title="Schedule Time Block"
+            title="Agendar Bloco de Foco"
             className="w-12 h-12 rounded-full bg-indigo-600 hover:bg-indigo-500 active:scale-95 text-white flex items-center justify-center shadow-lg shadow-indigo-900/60 transition-transform ring-4 ring-[#0b1326]"
           >
             <Plus className="w-6 h-6 stroke-[2.5]" />

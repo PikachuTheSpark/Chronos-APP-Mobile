@@ -59,7 +59,7 @@ export const PhoneSimulator: React.FC<PhoneSimulatorProps> = ({
               className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-slate-900/90 text-slate-300 hover:text-white border border-slate-700/80 text-xs shadow-lg backdrop-blur-md transition-all"
             >
               <Smartphone className="w-3.5 h-3.5 text-indigo-400" />
-              <span>Switch to Phone Frame</span>
+              <span>Moldura de Celular</span>
             </button>
           </div>
         )}
@@ -79,7 +79,7 @@ export const PhoneSimulator: React.FC<PhoneSimulatorProps> = ({
       <div className="relative z-30 mb-4 flex items-center justify-between w-full max-w-[430px] px-2 text-xs">
         <div className="flex items-center gap-2">
           <div className="w-2.5 h-2.5 rounded-full bg-indigo-500" />
-          <span className="font-bold text-slate-200 tracking-tight">iPhone 16 Pro Viewport</span>
+          <span className="font-bold text-slate-200 tracking-tight">Visualização iPhone 16 Pro</span>
           <span className="text-slate-500 text-[11px] font-mono">393 × 852</span>
         </div>
 
@@ -87,14 +87,14 @@ export const PhoneSimulator: React.FC<PhoneSimulatorProps> = ({
           <button
             onClick={() => setScale((s) => Math.max(0.75, s - 0.05))}
             className="p-1.5 rounded-lg bg-slate-900 text-slate-400 hover:text-white border border-slate-800 transition-colors"
-            title="Zoom Out"
+            title="Diminuir Zoom"
           >
             <ZoomOut className="w-3.5 h-3.5" />
           </button>
           <button
             onClick={() => setScale((s) => Math.min(1.1, s + 0.05))}
             className="p-1.5 rounded-lg bg-slate-900 text-slate-400 hover:text-white border border-slate-800 transition-colors"
-            title="Zoom In"
+            title="Aumentar Zoom"
           >
             <ZoomIn className="w-3.5 h-3.5" />
           </button>
@@ -104,10 +104,10 @@ export const PhoneSimulator: React.FC<PhoneSimulatorProps> = ({
               setViewMode('fullscreen');
             }}
             className="flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-slate-900 text-slate-300 hover:text-white border border-slate-800 transition-colors font-medium text-[11px]"
-            title="Open Fullscreen Responsive"
+            title="Expandir para Tela Inteira"
           >
             <Maximize2 className="w-3.5 h-3.5 text-indigo-400" />
-            <span>Full Canvas</span>
+            <span>Tela Inteira</span>
           </button>
         </div>
       </div>

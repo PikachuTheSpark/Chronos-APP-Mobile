@@ -27,86 +27,86 @@ export function formatTimeFromMinutes(totalMinutes: number): string {
 }
 
 export function getInitialSeedBlocks(todayKey: string): TimeBlock[] {
-  // Generate sample blocks for today and surrounding dates
+  // Gera blocos de exemplo para hoje e datas ao redor
   return [
     {
       id: 'block-1',
-      title: 'Morning Architecture Sprint',
+      title: 'Sprint Matinal de Arquitetura',
       category: 'deep_work',
       startTime: '08:30',
       endTime: '10:00',
       durationMinutes: 90,
       date: todayKey,
       completed: true,
-      notes: 'Finalized database schema and service worker cache rules',
+      notes: 'Finalização do schema de banco e regras de cache do service worker',
       focusTimeSpent: 5400,
     },
     {
       id: 'block-2',
-      title: 'Design Review & Standup',
+      title: 'Revisão de Design & Daily Sync',
       category: 'meeting',
       startTime: '10:15',
       endTime: '11:00',
       durationMinutes: 45,
       date: todayKey,
       completed: true,
-      notes: 'Reviewed mobile viewport ergonomics and thumb zones',
+      notes: 'Revisão da ergonomia no celular e zonas de alcance do polegar',
     },
     {
       id: 'block-3',
-      title: 'Temporal Timeline Refactoring',
+      title: 'Refatoração da Linha do Tempo',
       category: 'deep_work',
       startTime: '11:30',
       endTime: '13:00',
       durationMinutes: 90,
       date: todayKey,
       completed: true,
-      notes: 'Calculated laser now-line coordinates and 15-minute grid ticks',
+      notes: 'Cálculo de coordenadas do laser da linha do tempo e marcações de 15 min',
       focusTimeSpent: 5400,
     },
     {
       id: 'block-4',
-      title: 'Midday Recharge & Nutrition',
+      title: 'Recarga Nutricional & Caminhada',
       category: 'recovery',
       startTime: '13:00',
       endTime: '14:00',
       durationMinutes: 60,
       date: todayKey,
       completed: true,
-      notes: 'Low glycemic meal & sunlight exposure walk',
+      notes: 'Refeição balanceada e exposição à luz solar natural',
     },
     {
       id: 'block-5',
-      title: 'Active Focus: Mobile Polish & Haptics',
+      title: 'Foco Ativo: Polimento Mobile & Hápticos',
       category: 'deep_work',
       startTime: '14:30',
       endTime: '16:30',
       durationMinutes: 120,
       date: todayKey,
       completed: false,
-      notes: 'Audio synthesis engine and bottom sheet gestures',
+      notes: 'Motor acústico de frequências e gestos no painel inferior',
     },
     {
       id: 'block-6',
-      title: 'Production Deployment & Smoke Test',
+      title: 'Deploy em Produção & Teste de Carga',
       category: 'urgent',
       startTime: '17:00',
       endTime: '18:00',
       durationMinutes: 60,
       date: todayKey,
       completed: false,
-      notes: 'Verify PWA offline resilience and audit touch hitboxes',
+      notes: 'Verificação de resiliência offline PWA e alvos de toque',
     },
     {
       id: 'block-7',
-      title: 'Evening Digital Shutdown Protocol',
+      title: 'Desconexão Digital Noturna',
       category: 'protocol',
       startTime: '19:00',
       endTime: '19:30',
       durationMinutes: 30,
       date: todayKey,
       completed: false,
-      notes: 'Clear notifications, write tomorrow primary 3 MIT targets',
+      notes: 'Zerar notificações e definir as 3 prioridades de amanhã',
     },
   ];
 }
@@ -115,7 +115,7 @@ export function getInitialProtocols(todayKey: string): HabitProtocol[] {
   return [
     {
       id: 'proto-1',
-      title: 'Early Sunlight & 500ml Electrolytes',
+      title: 'Luz Solar Matinal & 500ml de Água',
       category: 'protocol',
       streak: 14,
       completedDates: [todayKey],
@@ -123,7 +123,7 @@ export function getInitialProtocols(todayKey: string): HabitProtocol[] {
     },
     {
       id: 'proto-2',
-      title: '90-min High-Leverage Deep Block',
+      title: 'Bloco de 90 min de Foco Profundo',
       category: 'deep_work',
       streak: 8,
       completedDates: [todayKey],
@@ -131,7 +131,7 @@ export function getInitialProtocols(todayKey: string): HabitProtocol[] {
     },
     {
       id: 'proto-3',
-      title: 'Zero Unread Inbox & Slack Clearance',
+      title: 'Zerar Caixa de Entrada & Mensagens',
       category: 'recovery',
       streak: 5,
       completedDates: [],
@@ -139,7 +139,7 @@ export function getInitialProtocols(todayKey: string): HabitProtocol[] {
     },
     {
       id: 'proto-4',
-      title: 'Physical Movement / Zone 2 Cardio',
+      title: 'Exercício Físico / Cardio Zona 2',
       category: 'protocol',
       streak: 11,
       completedDates: [],
@@ -147,7 +147,7 @@ export function getInitialProtocols(todayKey: string): HabitProtocol[] {
     },
     {
       id: 'proto-5',
-      title: 'Screens Off 60m Prior to Sleep',
+      title: 'Telas Desligadas 60 min Antes de Dormir',
       category: 'protocol',
       streak: 6,
       completedDates: [],
@@ -216,7 +216,7 @@ export function loadSessions(): FocusSession[] {
   return [
     {
       id: 'sess-1',
-      blockTitle: 'Morning Architecture Sprint',
+      blockTitle: 'Sprint Matinal de Arquitetura',
       durationSeconds: 3600,
       timestamp: Date.now() - 18000000,
       mode: 'pomodoro',
@@ -224,7 +224,7 @@ export function loadSessions(): FocusSession[] {
     },
     {
       id: 'sess-2',
-      blockTitle: 'Temporal Timeline Refactoring',
+      blockTitle: 'Refatoração da Linha do Tempo',
       durationSeconds: 5400,
       timestamp: Date.now() - 7200000,
       mode: 'countdown',
@@ -242,17 +242,17 @@ export function saveSessions(sessions: FocusSession[]): void {
 }
 
 // Generate standard .ics (iCalendar) file from blocks
-export function generateICS(blocks: TimeBlock[], filename: string = 'chronos-schedule.ics'): void {
+export function generateICS(blocks: TimeBlock[], filename: string = 'chronos-cronograma.ics'): void {
   const now = new Date();
   const timeStamp = now.toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
 
   let icsContent = [
     'BEGIN:VCALENDAR',
     'VERSION:2.0',
-    'PRODID:-//Chronos Precision Focus//EN',
+    'PRODID:-//Chronos Precision Focus//PT-BR',
     'CALSCALE:GREGORIAN',
     'METHOD:PUBLISH',
-    'X-WR-CALNAME:Chronos Focus Schedule',
+    'X-WR-CALNAME:Cronograma de Foco Chronos',
   ];
 
   for (const block of blocks) {

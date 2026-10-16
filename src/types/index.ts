@@ -46,7 +46,7 @@ export interface CategoryMetadata {
 export const CATEGORIES: Record<BlockCategory, CategoryMetadata> = {
   deep_work: {
     id: 'deep_work',
-    label: 'Deep Work',
+    label: 'Foco Profundo',
     color: '#6366f1',
     bgTint: 'bg-indigo-950/60',
     borderColor: 'border-indigo-500/40',
@@ -54,7 +54,7 @@ export const CATEGORIES: Record<BlockCategory, CategoryMetadata> = {
   },
   meeting: {
     id: 'meeting',
-    label: 'Sync / Meeting',
+    label: 'Reunião / Sync',
     color: '#0ea5e9',
     bgTint: 'bg-sky-950/60',
     borderColor: 'border-sky-500/40',
@@ -62,7 +62,7 @@ export const CATEGORIES: Record<BlockCategory, CategoryMetadata> = {
   },
   urgent: {
     id: 'urgent',
-    label: 'Urgent Sprint',
+    label: 'Sprint Urgente',
     color: '#f43f5e',
     bgTint: 'bg-rose-950/60',
     borderColor: 'border-rose-500/40',
@@ -70,7 +70,7 @@ export const CATEGORIES: Record<BlockCategory, CategoryMetadata> = {
   },
   recovery: {
     id: 'recovery',
-    label: 'Rest & Buffer',
+    label: 'Pausa & Recarga',
     color: '#f59e0b',
     bgTint: 'bg-amber-950/60',
     borderColor: 'border-amber-500/40',
@@ -78,7 +78,7 @@ export const CATEGORIES: Record<BlockCategory, CategoryMetadata> = {
   },
   protocol: {
     id: 'protocol',
-    label: 'Protocol / Habit',
+    label: 'Protocolo & Hábito',
     color: '#10b981',
     bgTint: 'bg-emerald-950/60',
     borderColor: 'border-emerald-500/40',

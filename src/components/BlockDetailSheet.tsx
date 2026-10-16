@@ -54,7 +54,7 @@ export const BlockDetailSheet: React.FC<BlockDetailSheetProps> = ({
 
   const handleDelete = () => {
     triggerHaptic('warning');
-    if (confirm('Delete this scheduled block?')) {
+    if (confirm('Deseja excluir este bloco agendado?')) {
       onDelete(block.id);
       onClose();
     }
@@ -75,7 +75,7 @@ export const BlockDetailSheet: React.FC<BlockDetailSheetProps> = ({
             </span>
           </div>
           <div className="text-[11px] font-mono-numbers text-slate-400">
-            {block.durationMinutes} min block
+            {block.durationMinutes} min de bloco
           </div>
         </div>
 
@@ -98,7 +98,7 @@ export const BlockDetailSheet: React.FC<BlockDetailSheetProps> = ({
           </div>
           <span className="text-slate-600">|</span>
           <div className="text-slate-400">
-            Date: <span className="text-slate-200">{block.date}</span>
+            Data: <span className="text-slate-200">{block.date}</span>
           </div>
         </div>
 
@@ -106,7 +106,7 @@ export const BlockDetailSheet: React.FC<BlockDetailSheetProps> = ({
         {block.notes && (
           <div className="p-3 rounded-xl bg-[#0b1326] border border-slate-800 text-xs text-slate-300">
             <span className="text-[10px] uppercase font-semibold text-slate-500 block mb-1">
-              Deliverable Notes
+              Notas de Entrega
             </span>
             <p className="whitespace-pre-wrap">{block.notes}</p>
           </div>
@@ -121,7 +121,7 @@ export const BlockDetailSheet: React.FC<BlockDetailSheetProps> = ({
               className="w-full py-3 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold shadow-lg shadow-indigo-950/60 active:scale-98 transition-all flex items-center justify-center gap-2"
             >
               <Play className="w-4 h-4 fill-current text-white" />
-              <span>Launch Focus Chronometer</span>
+              <span>Iniciar Cronômetro de Foco</span>
             </button>
           )}
 
@@ -135,7 +135,7 @@ export const BlockDetailSheet: React.FC<BlockDetailSheetProps> = ({
             }`}
           >
             <CheckCircle2 className="w-4 h-4" />
-            <span>{block.completed ? 'Mark as Incomplete' : 'Complete Time-Block'}</span>
+            <span>{block.completed ? 'Marcar como Incompleto' : 'Concluir Bloco de Tempo'}</span>
           </button>
 
           {/* Edit & Delete row */}
@@ -148,7 +148,7 @@ export const BlockDetailSheet: React.FC<BlockDetailSheetProps> = ({
               className="py-2.5 rounded-xl bg-[#0b1326] border border-slate-800 hover:bg-slate-800 text-slate-300 text-xs font-medium flex items-center justify-center gap-1.5 transition-colors"
             >
               <Edit2 className="w-3.5 h-3.5" />
-              <span>Edit Details</span>
+              <span>Editar Detalhes</span>
             </button>
 
             <button
@@ -156,7 +156,7 @@ export const BlockDetailSheet: React.FC<BlockDetailSheetProps> = ({
               className="py-2.5 rounded-xl bg-rose-950/30 border border-rose-900/40 hover:bg-rose-900/30 text-rose-300 text-xs font-medium flex items-center justify-center gap-1.5 transition-colors"
             >
               <Trash2 className="w-3.5 h-3.5" />
-              <span>Delete Block</span>
+              <span>Excluir Bloco</span>
             </button>
           </div>
         </div>

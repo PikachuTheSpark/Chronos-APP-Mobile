@@ -95,7 +95,7 @@ export const TimelineView: React.FC<TimelineViewProps> = ({
               : 'text-slate-400 hover:text-slate-200 bg-slate-900/50'
           }`}
         >
-          All ({blocks.length})
+          Todos ({blocks.length})
         </button>
         {(Object.keys(CATEGORIES) as BlockCategory[]).map((catKey) => {
           const cat = CATEGORIES[catKey];
@@ -128,7 +128,7 @@ export const TimelineView: React.FC<TimelineViewProps> = ({
           className="absolute bottom-20 right-4 z-30 flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-rose-600/90 hover:bg-rose-500 text-white text-xs font-semibold shadow-lg shadow-rose-900/40 backdrop-blur-md active:scale-95 transition-transform"
         >
           <Navigation className="w-3.5 h-3.5 fill-current" />
-          <span>Now ({formatTimeFromMinutes(currentMinutes)})</span>
+          <span>Agora ({formatTimeFromMinutes(currentMinutes)})</span>
         </button>
       )}
 
@@ -178,7 +178,7 @@ export const TimelineView: React.FC<TimelineViewProps> = ({
                 <div
                   onClick={() => onSlotClick(hourFormatted)}
                   className="absolute left-14 right-0 h-[68px] top-1 cursor-pointer hover:bg-indigo-900/10 transition-colors"
-                  title={`Tap to schedule at ${hourFormatted}`}
+                  title={`Toque para agendar às ${hourFormatted}`}
                 />
               </div>
             );
@@ -235,7 +235,7 @@ export const TimelineView: React.FC<TimelineViewProps> = ({
                           <>
                             <span className="text-slate-500" aria-hidden="true">·</span>
                             <span className="text-emerald-400 font-medium flex items-center gap-0.5">
-                              <CheckCircle2 className="w-3 h-3" /> Done
+                              <CheckCircle2 className="w-3 h-3" /> Feito
                             </span>
                           </>
                         )}
@@ -267,7 +267,7 @@ export const TimelineView: React.FC<TimelineViewProps> = ({
                         triggerHaptic('medium');
                         onStartFocus(block);
                       }}
-                      title="Start Focus Chronometer"
+                      title="Iniciar Cronômetro de Foco"
                       className="p-1.5 rounded-md bg-white/10 hover:bg-white/20 text-white transition-colors shrink-0"
                     >
                       <Play className="w-3.5 h-3.5 fill-current text-indigo-300" />
@@ -306,15 +306,15 @@ export const TimelineView: React.FC<TimelineViewProps> = ({
           {filteredBlocks.length === 0 && (
             <div className="absolute inset-x-6 top-32 flex flex-col items-center justify-center text-center p-6 rounded-2xl bg-[#131b2e]/60 border border-slate-800">
               <Clock className="w-8 h-8 text-indigo-400/60 mb-2" />
-              <p className="text-sm font-semibold text-slate-200">No time blocks scheduled</p>
+              <p className="text-sm font-semibold text-slate-200">Nenhum bloco agendado</p>
               <p className="text-xs text-slate-400 mt-1 max-w-xs">
-                Tap any time slot on the grid or use the + button to structure your cognitive day.
+                Toque em qualquer horário na grade ou use o botão + para organizar seu dia de foco.
               </p>
               <button
                 onClick={() => onSlotClick('09:00')}
                 className="mt-3 flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-medium transition-colors"
               >
-                <Plus className="w-3.5 h-3.5" /> Schedule 09:00 Block
+                <Plus className="w-3.5 h-3.5" /> Agendar Bloco das 09:00
               </button>
             </div>
           )}

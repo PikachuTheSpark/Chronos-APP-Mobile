@@ -70,7 +70,7 @@ export const PWAInstallBanner: React.FC = () => {
         <div className="flex items-center gap-2 min-w-0">
           <Smartphone className="w-4 h-4 text-indigo-400 shrink-0" />
           <span className="text-slate-200 truncate font-medium">
-            Install Chronos for native phone focus
+            Instale o Chronos para foco direto no celular
           </span>
         </div>
 
@@ -79,7 +79,7 @@ export const PWAInstallBanner: React.FC = () => {
             onClick={handleInstallClick}
             className="px-2.5 py-1 rounded-md bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-[11px] shadow-sm transition-colors"
           >
-            Install App
+            Instalar App
           </button>
           <button
             onClick={() => setDismissed(true)}
@@ -95,7 +95,7 @@ export const PWAInstallBanner: React.FC = () => {
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-xs select-none">
           <div className="w-full max-w-sm rounded-2xl bg-[#131b2e] border border-slate-700 p-5 shadow-2xl text-slate-200">
             <div className="flex items-center justify-between mb-3">
-              <h4 className="text-sm font-bold font-display text-white">Install on iPhone / iPad</h4>
+              <h4 className="text-sm font-bold font-display text-white">Instalar no iPhone / iPad</h4>
               <button
                 onClick={() => setShowIOSModal(false)}
                 className="p-1 rounded text-slate-400 hover:text-white"
@@ -110,7 +110,7 @@ export const PWAInstallBanner: React.FC = () => {
                   <Share2 className="w-4 h-4" />
                 </div>
                 <div>
-                  <span className="font-semibold text-white">1. Tap Share</span> in Safari bottom bar.
+                  <span className="font-semibold text-white">1. Toque em Compartilhar</span> na barra inferior do Safari.
                 </div>
               </div>
 
@@ -119,7 +119,7 @@ export const PWAInstallBanner: React.FC = () => {
                   <PlusSquare className="w-4 h-4" />
                 </div>
                 <div>
-                  <span className="font-semibold text-white">2. Select Add to Home Screen</span> to create the full-screen phone app icon.
+                  <span className="font-semibold text-white">2. Selecione 'Adicionar à Tela de Início'</span> para instalar o app nativo em tela inteira.
                 </div>
               </div>
             </div>
@@ -128,7 +128,7 @@ export const PWAInstallBanner: React.FC = () => {
               onClick={() => setShowIOSModal(false)}
               className="mt-4 w-full py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white text-xs font-semibold transition-colors"
             >
-              Got it
+              Entendido
             </button>
           </div>
         </div>

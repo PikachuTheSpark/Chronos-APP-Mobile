@@ -32,6 +32,20 @@ export const DynamicIsland: React.FC<DynamicIslandProps> = ({
 
   const hasActivity = isTimerRunning || activeSoundscape !== 'none';
 
+  const modeNames: Record<string, string> = {
+    pomodoro: 'Pomodoro',
+    countdown: 'Meta',
+    stopwatch: 'Cronômetro',
+  };
+
+  const soundNames: Record<SoundscapeType, string> = {
+    none: 'Nenhum',
+    rain: 'Chuva',
+    binaural_gamma: 'Gama 40Hz',
+    deep_space: 'Espaço',
+    cyber_fan: 'Ventilador',
+  };
+
   return (
     <div className="flex justify-center w-full select-none z-50">
       <motion.div
@@ -65,12 +79,12 @@ export const DynamicIsland: React.FC<DynamicIslandProps> = ({
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-1.5 text-indigo-400 font-medium">
                   <Timer className="w-3.5 h-3.5 animate-pulse" />
-                  <span className="capitalize">{timerMode} Focus</span>
+                  <span>Foco {modeNames[timerMode] || 'Ativo'}</span>
                 </div>
                 {activeSoundscape !== 'none' && (
                   <div className="flex items-center gap-1 text-[11px] text-sky-400 bg-sky-950/40 px-2 py-0.5 rounded-full border border-sky-800/40">
                     <Music className="w-3 h-3" />
-                    <span className="capitalize">{activeSoundscape.replace('_', ' ')}</span>
+                    <span>{soundNames[activeSoundscape] || activeSoundscape}</span>
                   </div>
                 )}
                 <button
@@ -86,7 +100,7 @@ export const DynamicIsland: React.FC<DynamicIslandProps> = ({
                   {formatMinSec(timerSecondsLeft)}
                 </span>
                 <span className="text-[11px] text-slate-400 max-w-[140px] truncate text-right">
-                  {currentTaskTitle || 'Free Focus Session'}
+                  {currentTaskTitle || 'Sessão de Foco Livre'}
                 </span>
               </div>
 
@@ -95,7 +109,7 @@ export const DynamicIsland: React.FC<DynamicIslandProps> = ({
                   onClick={onOpenFocusTab}
                   className="text-[11px] text-indigo-300 hover:text-white font-medium flex items-center gap-1"
                 >
-                  Open Chronometer
+                  Abrir Cronômetro
                 </button>
                 <div className="flex items-center gap-2">
                   <button

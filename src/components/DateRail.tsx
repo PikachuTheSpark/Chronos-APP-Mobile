@@ -27,7 +27,7 @@ export const DateRail: React.FC<DateRailProps> = ({
       const d = new Date(today);
       d.setDate(today.getDate() + offset);
       const key = formatDateKey(d);
-      const dayName = d.toLocaleDateString('en-US', { weekday: 'short' });
+      const dayName = d.toLocaleDateString('pt-BR', { weekday: 'short' }).replace('.', '');
       const dayNum = d.getDate();
       list.push({
         key,
@@ -60,8 +60,8 @@ export const DateRail: React.FC<DateRailProps> = ({
       <div className="flex items-center justify-between px-2 mb-1.5 text-xs text-slate-400">
         <div className="flex items-center gap-1.5 font-medium">
           <CalendarIcon className="w-3.5 h-3.5 text-indigo-400" />
-          <span className="text-slate-200">
-            {new Date(selectedDate + 'T12:00:00').toLocaleDateString('en-US', {
+          <span className="text-slate-200 capitalize">
+            {new Date(selectedDate + 'T12:00:00').toLocaleDateString('pt-BR', {
               month: 'long',
               day: 'numeric',
               year: 'numeric',
@@ -73,7 +73,7 @@ export const DateRail: React.FC<DateRailProps> = ({
             onClick={() => handleSelect(todayDateKey)}
             className="text-[11px] text-indigo-400 hover:text-indigo-300 font-medium tracking-tight px-2 py-0.5 rounded bg-indigo-950/60 border border-indigo-800/40 active:scale-95 transition-all"
           >
-            Jump to Today
+            Ir para Hoje
           </button>
         )}
       </div>

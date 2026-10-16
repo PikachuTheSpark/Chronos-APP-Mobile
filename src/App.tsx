@@ -180,7 +180,7 @@ export default function App() {
     const newSession: FocusSession = {
       id: `sess-${Date.now()}`,
       blockId,
-      blockTitle: activeFocusBlock?.title || 'Free Focus Session',
+      blockTitle: activeFocusBlock?.title || 'Sessão de Foco Livre',
       durationSeconds: durationSec,
       timestamp: Date.now(),
       mode: timerMode,
@@ -243,7 +243,7 @@ export default function App() {
               CHRONOS
             </span>
             <span className="text-[11px] font-mono-numbers text-indigo-400 bg-indigo-950/70 border border-indigo-800/40 px-1.5 py-0.2 rounded">
-              PRECISION
+              PRECISÃO
             </span>
           </div>
 
@@ -251,7 +251,7 @@ export default function App() {
           <div className="flex items-center gap-2 text-xs">
             <div className="flex items-center gap-1 text-amber-400 font-mono-numbers text-[11px]">
               <Flame className="w-3.5 h-3.5 fill-current" />
-              <span>{totalHabitsCompletedToday} streaks</span>
+              <span>{totalHabitsCompletedToday} hábitos</span>
             </div>
           </div>
 
@@ -264,7 +264,7 @@ export default function App() {
                 setBlockToEdit(undefined);
                 setIsCreateModalOpen(true);
               }}
-              title="Add Time Block"
+              title="Adicionar Bloco de Tempo"
               className="p-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white transition-colors"
             >
               <Plus className="w-4 h-4 stroke-[2.5]" />

@@ -54,7 +54,7 @@ export const AnalyticsView: React.FC<AnalyticsViewProps> = ({
 
   const handleExportCalendar = () => {
     triggerHaptic('medium');
-    generateICS(blocks, 'chronos-focus-schedule.ics');
+    generateICS(blocks, 'chronos-cronograma.ics');
   };
 
   return (
@@ -63,9 +63,9 @@ export const AnalyticsView: React.FC<AnalyticsViewProps> = ({
       <div className="flex items-center justify-between mb-4">
         <div>
           <h2 className="text-lg font-bold font-display text-white tracking-tight">
-            Cognitive Telemetry
+            Telemetria Cognitiva
           </h2>
-          <p className="text-xs text-slate-400">Temporal load distribution and focus velocity</p>
+          <p className="text-xs text-slate-400">Distribuição temporal e velocidade de foco</p>
         </div>
 
         <button
@@ -73,7 +73,7 @@ export const AnalyticsView: React.FC<AnalyticsViewProps> = ({
           className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold shadow-md active:scale-95 transition-transform"
         >
           <Download className="w-3.5 h-3.5" />
-          <span>Export .ICS</span>
+          <span>Exportar .ICS</span>
         </button>
       </div>
 
@@ -81,21 +81,21 @@ export const AnalyticsView: React.FC<AnalyticsViewProps> = ({
       <div className="grid grid-cols-2 gap-2.5 mb-4">
         <div className="p-3.5 rounded-2xl bg-[#131b2e] border border-slate-800">
           <div className="flex items-center justify-between text-slate-400 mb-1">
-            <span className="text-[11px] font-medium">Focus Logged</span>
+            <span className="text-[11px] font-medium">Foco Registrado</span>
             <Clock className="w-3.5 h-3.5 text-indigo-400" />
           </div>
           <div className="text-2xl font-bold font-mono-numbers text-white">
             {totalFocusHours}
-            <span className="text-xs text-slate-400 font-normal ml-1">hrs</span>
+            <span className="text-xs text-slate-400 font-normal ml-1">h</span>
           </div>
           <div className="text-[10px] text-emerald-400 mt-1 flex items-center gap-1">
-            <TrendingUp className="w-3 h-3" /> +18% vs last cycle
+            <TrendingUp className="w-3 h-3" /> +18% vs ciclo anterior
           </div>
         </div>
 
         <div className="p-3.5 rounded-2xl bg-[#131b2e] border border-slate-800">
           <div className="flex items-center justify-between text-slate-400 mb-1">
-            <span className="text-[11px] font-medium">Completion Velocity</span>
+            <span className="text-[11px] font-medium">Taxa de Conclusão</span>
             <Zap className="w-3.5 h-3.5 text-amber-400" />
           </div>
           <div className="text-2xl font-bold font-mono-numbers text-white">
@@ -105,7 +105,7 @@ export const AnalyticsView: React.FC<AnalyticsViewProps> = ({
             <span className="text-xs text-slate-400 font-normal ml-1">%</span>
           </div>
           <div className="text-[10px] text-slate-400 mt-1 font-mono-numbers">
-            {Math.round(totalCompletedMinutes / 60)}h completed of{' '}
+            {Math.round(totalCompletedMinutes / 60)}h concluídas de{' '}
             {Math.round(totalScheduledMinutes / 60)}h
           </div>
         </div>
@@ -114,7 +114,7 @@ export const AnalyticsView: React.FC<AnalyticsViewProps> = ({
       {/* Category Load Breakdown */}
       <div className="p-4 mb-4 rounded-2xl bg-[#131b2e] border border-slate-800">
         <div className="flex items-center justify-between mb-3">
-          <span className="text-xs font-bold text-white">Time Budget Allocation</span>
+          <span className="text-xs font-bold text-white">Orçamento de Tempo</span>
           <span className="text-[11px] text-slate-400 font-mono-numbers">
             {Math.round(totalScheduledMinutes / 60)}h total
           </span>
@@ -168,24 +168,24 @@ export const AnalyticsView: React.FC<AnalyticsViewProps> = ({
       {/* Peak Cognitive Hours curve */}
       <div className="p-4 mb-4 rounded-2xl bg-[#131b2e] border border-slate-800">
         <div className="flex items-center justify-between mb-2">
-          <span className="text-xs font-bold text-white">Cognitive Efficiency Windows</span>
-          <span className="text-[11px] text-indigo-400 font-medium">Ultradian Curve</span>
+          <span className="text-xs font-bold text-white">Janelas de Eficiência Cognitiva</span>
+          <span className="text-[11px] text-indigo-400 font-medium">Curva Ultradiana</span>
         </div>
         <p className="text-[11px] text-slate-400 mb-3">
-          Deep work blocks concentrated between 08:30 – 11:30 show 94% task completion rate with zero context switching.
+          Blocos de foco profundo concentrados entre 08:30 – 11:30 apresentam 94% de taxa de conclusão com zero troca de contexto.
         </p>
 
         {/* Visual timeline bar chart of hourly intensity */}
         <div className="grid grid-cols-8 gap-1 items-end h-16 pt-2">
           {[
-            { hour: '8a', val: 75, peak: false },
-            { hour: '9a', val: 95, peak: true },
-            { hour: '10a', val: 100, peak: true },
-            { hour: '11a', val: 85, peak: true },
-            { hour: '12p', val: 40, peak: false },
-            { hour: '2p', val: 80, peak: false },
-            { hour: '4p', val: 65, peak: false },
-            { hour: '6p', val: 50, peak: false },
+            { hour: '08h', val: 75, peak: false },
+            { hour: '09h', val: 95, peak: true },
+            { hour: '10h', val: 100, peak: true },
+            { hour: '11h', val: 85, peak: true },
+            { hour: '12h', val: 40, peak: false },
+            { hour: '14h', val: 80, peak: false },
+            { hour: '16h', val: 65, peak: false },
+            { hour: '18h', val: 50, peak: false },
           ].map((item, idx) => (
             <div key={idx} className="flex flex-col items-center gap-1 h-full justify-end">
               <div
@@ -204,10 +204,10 @@ export const AnalyticsView: React.FC<AnalyticsViewProps> = ({
       <div className="p-4 mb-4 rounded-2xl bg-[#131b2e] border border-slate-800 space-y-3">
         <div className="flex items-center gap-2">
           <Smartphone className="w-4 h-4 text-sky-400" />
-          <span className="text-xs font-bold text-white">Smartphone Integration</span>
+          <span className="text-xs font-bold text-white">Integração com Celular</span>
         </div>
         <p className="text-[11px] text-slate-400">
-          Sync your Chronos timeline with iOS Calendar, Google Calendar, or install as a home screen app for instant one-handed access.
+          Sincronize sua linha do tempo do Chronos com o Apple Agenda, Google Agenda ou instale como app na tela de início para acesso rápido.
         </p>
 
         <div className="flex flex-col gap-2 pt-1">
@@ -216,7 +216,7 @@ export const AnalyticsView: React.FC<AnalyticsViewProps> = ({
             className="w-full py-2.5 px-3 rounded-xl bg-[#1e293b] hover:bg-slate-700 text-xs font-semibold text-white flex items-center justify-center gap-2 transition-colors border border-slate-700"
           >
             <Calendar className="w-3.5 h-3.5 text-indigo-400" />
-            <span>Download .ICS for Apple / Google Calendar</span>
+            <span>Baixar .ICS para Apple / Google Agenda</span>
           </button>
 
           {isPWAInstallable && onOpenPWAInstall && (
@@ -225,7 +225,7 @@ export const AnalyticsView: React.FC<AnalyticsViewProps> = ({
               className="w-full py-2.5 px-3 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-xs font-bold text-white flex items-center justify-center gap-2 transition-colors shadow-md shadow-indigo-950"
             >
               <Smartphone className="w-3.5 h-3.5" />
-              <span>Install Chronos to Phone Home Screen</span>
+              <span>Instalar Chronos na Tela de Início do Celular</span>
             </button>
           )}
         </div>
@@ -236,14 +236,14 @@ export const AnalyticsView: React.FC<AnalyticsViewProps> = ({
         <button
           onClick={() => {
             triggerHaptic('warning');
-            if (confirm('Reset to standard demo time-blocks and protocols?')) {
+            if (confirm('Restaurar blocos de tempo e protocolos de demonstração padrão?')) {
               onResetSeedData();
             }
           }}
           className="text-xs text-slate-500 hover:text-rose-400 flex items-center gap-1.5 transition-colors"
         >
           <RotateCcw className="w-3.5 h-3.5" />
-          <span>Restore Sample Schedule Data</span>
+          <span>Restaurar Dados de Exemplo</span>
         </button>
       </div>
     </div>

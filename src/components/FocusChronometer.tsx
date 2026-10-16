@@ -193,9 +193,9 @@ export const FocusChronometer: React.FC<FocusChronometerProps> = ({
       <div className="flex items-center justify-between mb-4">
         <div>
           <h2 className="text-lg font-bold font-display text-white tracking-tight">
-            Precision Chronometer
+            Cronômetro de Precisão
           </h2>
-          <p className="text-xs text-slate-400">Cognitive flow & temporal orchestration</p>
+          <p className="text-xs text-slate-400">Fluxo cognitivo & orquestração temporal</p>
         </div>
 
         {/* Mode Selector Tabs */}
@@ -218,7 +218,7 @@ export const FocusChronometer: React.FC<FocusChronometerProps> = ({
                 : 'text-slate-400 hover:text-white'
             }`}
           >
-            Target
+            Meta
           </button>
           <button
             onClick={() => handleModeChange('stopwatch')}
@@ -228,7 +228,7 @@ export const FocusChronometer: React.FC<FocusChronometerProps> = ({
                 : 'text-slate-400 hover:text-white'
             }`}
           >
-            Stopwatch
+            Cronômetro
           </button>
         </div>
       </div>
@@ -238,7 +238,7 @@ export const FocusChronometer: React.FC<FocusChronometerProps> = ({
         <div className="flex items-center justify-between p-3 mb-4 rounded-xl bg-indigo-950/40 border border-indigo-500/30">
           <div className="flex flex-col min-w-0 pr-2">
             <span className="text-[10px] uppercase tracking-wider text-indigo-400 font-semibold">
-              Linked Time-Block
+              Bloco Vinculado
             </span>
             <span className="text-xs font-bold text-white truncate">{activeBlock.title}</span>
             <span className="text-[11px] text-slate-400 font-mono-numbers">
@@ -249,7 +249,7 @@ export const FocusChronometer: React.FC<FocusChronometerProps> = ({
             onClick={onClearActiveBlock}
             className="text-[11px] text-slate-400 hover:text-white px-2 py-1 rounded bg-white/5"
           >
-            Unlink
+            Desvincular
           </button>
         </div>
       )}
@@ -304,12 +304,12 @@ export const FocusChronometer: React.FC<FocusChronometerProps> = ({
                   isTimerRunning ? 'bg-emerald-400 animate-pulse' : 'bg-slate-600'
                 }`}
               />
-              <span>{isTimerRunning ? 'Deep Focus Active' : 'Session Ready'}</span>
+              <span>{isTimerRunning ? 'Foco Profundo Ativo' : 'Sessão Pronta'}</span>
             </div>
 
             {timerMode !== 'stopwatch' && (
               <span className="text-[11px] text-slate-500 mt-1 font-mono-numbers">
-                {Math.round(progressPercent)}% elapsed
+                {Math.round(progressPercent)}% decorrido
               </span>
             )}
           </div>
@@ -339,7 +339,7 @@ export const FocusChronometer: React.FC<FocusChronometerProps> = ({
       <div className="flex items-center justify-center gap-3 my-3">
         <button
           onClick={handleResetTimer}
-          title="Reset Timer"
+          title="Redefinir Cronômetro"
           className="w-12 h-12 rounded-full bg-[#131b2e] hover:bg-[#1e293b] text-slate-300 flex items-center justify-center border border-slate-800 active:scale-95 transition-all"
         >
           <RotateCcw className="w-5 h-5" />
@@ -356,12 +356,12 @@ export const FocusChronometer: React.FC<FocusChronometerProps> = ({
           {isTimerRunning ? (
             <>
               <Pause className="w-5 h-5 fill-current" />
-              <span>Pause Focus</span>
+              <span>Pausar Foco</span>
             </>
           ) : (
             <>
               <Play className="w-5 h-5 fill-current" />
-              <span>Start Session</span>
+              <span>Iniciar Sessão</span>
             </>
           )}
         </button>
@@ -370,7 +370,7 @@ export const FocusChronometer: React.FC<FocusChronometerProps> = ({
           <button
             onClick={handleAddLap}
             disabled={!isTimerRunning}
-            title="Record Lap"
+            title="Gravar Volta"
             className="w-12 h-12 rounded-full bg-[#131b2e] hover:bg-[#1e293b] text-slate-300 disabled:opacity-40 flex items-center justify-center border border-slate-800 active:scale-95 transition-all"
           >
             <ListPlus className="w-5 h-5" />
@@ -378,7 +378,7 @@ export const FocusChronometer: React.FC<FocusChronometerProps> = ({
         ) : (
           <button
             onClick={handleFinishEarly}
-            title="Complete & Log Session"
+            title="Concluir e Salvar Sessão"
             className="w-12 h-12 rounded-full bg-emerald-950/60 hover:bg-emerald-900/60 text-emerald-400 border border-emerald-800/40 flex items-center justify-center active:scale-95 transition-all"
           >
             <CheckCircle2 className="w-5 h-5" />
@@ -390,7 +390,7 @@ export const FocusChronometer: React.FC<FocusChronometerProps> = ({
       {timerMode === 'stopwatch' && laps.length > 0 && (
         <div className="mt-2 p-3 rounded-xl bg-[#131b2e] border border-slate-800 max-h-32 overflow-y-auto">
           <span className="text-[10px] text-slate-400 uppercase tracking-wider font-semibold block mb-1">
-            Recorded Intervals
+            Intervalos Registrados
           </span>
           <div className="space-y-1">
             {laps.map((lapSec, i) => (
@@ -398,7 +398,7 @@ export const FocusChronometer: React.FC<FocusChronometerProps> = ({
                 key={i}
                 className="flex items-center justify-between text-xs font-mono-numbers text-slate-300 py-0.5 border-b border-slate-800/60"
               >
-                <span>Interval #{laps.length - i}</span>
+                <span>Intervalo #{laps.length - i}</span>
                 <span className="font-semibold text-white">
                   {Math.floor(lapSec / 60)}m {lapSec % 60}s
                 </span>
@@ -414,7 +414,7 @@ export const FocusChronometer: React.FC<FocusChronometerProps> = ({
           <div className="flex items-center gap-1.5">
             <Radio className="w-4 h-4 text-indigo-400" />
             <span className="text-xs font-bold text-white tracking-tight">
-              Focus Acoustic Engine
+              Motor Acústico de Foco
             </span>
           </div>
           <button
@@ -440,8 +440,8 @@ export const FocusChronometer: React.FC<FocusChronometerProps> = ({
           >
             <Radio className="w-4 h-4 shrink-0 text-indigo-300" />
             <div className="min-w-0">
-              <span className="text-xs font-semibold block truncate">40Hz Gamma Focus</span>
-              <span className="text-[10px] text-slate-400 block">Neuro-entrainment</span>
+              <span className="text-xs font-semibold block truncate">Foco Gama 40Hz</span>
+              <span className="text-[10px] text-slate-400 block">Neuro-sincronização</span>
             </div>
           </button>
 
@@ -455,8 +455,8 @@ export const FocusChronometer: React.FC<FocusChronometerProps> = ({
           >
             <CloudRain className="w-4 h-4 shrink-0 text-sky-300" />
             <div className="min-w-0">
-              <span className="text-xs font-semibold block truncate">Rain Soundscape</span>
-              <span className="text-[10px] text-slate-400 block">Pink noise mask</span>
+              <span className="text-xs font-semibold block truncate">Chuva Suave</span>
+              <span className="text-[10px] text-slate-400 block">Ruído rosa imersivo</span>
             </div>
           </button>
 
@@ -470,8 +470,8 @@ export const FocusChronometer: React.FC<FocusChronometerProps> = ({
           >
             <Sparkles className="w-4 h-4 shrink-0 text-amber-300" />
             <div className="min-w-0">
-              <span className="text-xs font-semibold block truncate">Deep Space</span>
-              <span className="text-[10px] text-slate-400 block">Low rumble rumble</span>
+              <span className="text-xs font-semibold block truncate">Espaço Profundo</span>
+              <span className="text-[10px] text-slate-400 block">Graves calmantes</span>
             </div>
           </button>
 
@@ -485,8 +485,8 @@ export const FocusChronometer: React.FC<FocusChronometerProps> = ({
           >
             <Wind className="w-4 h-4 shrink-0 text-emerald-300" />
             <div className="min-w-0">
-              <span className="text-xs font-semibold block truncate">Cyber Fan Drone</span>
-              <span className="text-[10px] text-slate-400 block">Constant airflow</span>
+              <span className="text-xs font-semibold block truncate">Ventilador Cyber</span>
+              <span className="text-[10px] text-slate-400 block">Fluxo de ar contínuo</span>
             </div>
           </button>
         </div>

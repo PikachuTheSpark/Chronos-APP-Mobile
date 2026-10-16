@@ -53,9 +53,9 @@ export const HabitsProtocols: React.FC<HabitsProtocolsProps> = ({
       <div className="flex items-center justify-between mb-4">
         <div>
           <h2 className="text-lg font-bold font-display text-white tracking-tight">
-            Daily Execution Protocols
+            Protocolos de Execução Diária
           </h2>
-          <p className="text-xs text-slate-400">Non-negotiable personal cognitive rituals</p>
+          <p className="text-xs text-slate-400">Rituais cognitivos inegociáveis para alta performance</p>
         </div>
 
         <button
@@ -66,7 +66,7 @@ export const HabitsProtocols: React.FC<HabitsProtocolsProps> = ({
           className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold active:scale-95 transition-transform"
         >
           <Plus className="w-3.5 h-3.5" />
-          <span>Add Ritual</span>
+          <span>Novo Ritual</span>
         </button>
       </div>
 
@@ -74,10 +74,10 @@ export const HabitsProtocols: React.FC<HabitsProtocolsProps> = ({
       <div className="p-4 mb-4 rounded-2xl bg-[#131b2e] border border-slate-800 shadow-sm">
         <div className="flex items-center justify-between mb-2">
           <div className="flex items-center gap-2">
-            <span className="text-xs font-semibold text-white">Daily Adherence Rate</span>
+            <span className="text-xs font-semibold text-white">Taxa de Aderência Diária</span>
             <span className="text-slate-500 text-xs">·</span>
             <span className="text-xs font-mono-numbers text-indigo-300">
-              {completedTodayCount} of {protocols.length} Completed
+              {completedTodayCount} de {protocols.length} Concluídos
             </span>
           </div>
           <span className="text-sm font-bold font-mono-numbers text-emerald-400">
@@ -101,22 +101,22 @@ export const HabitsProtocols: React.FC<HabitsProtocolsProps> = ({
           className="p-3.5 mb-4 rounded-2xl bg-[#171f33] border border-indigo-500/30 shadow-lg space-y-3"
         >
           <div className="flex items-center justify-between">
-            <span className="text-xs font-bold text-white">New Protocol Definition</span>
+            <span className="text-xs font-bold text-white">Definição do Novo Ritual</span>
             <button
               type="button"
               onClick={() => setShowAddForm(false)}
               className="text-xs text-slate-400 hover:text-white"
             >
-              Cancel
+              Cancelar
             </button>
           </div>
 
           <div>
-            <label className="text-[11px] text-slate-400 block mb-1">Protocol Title</label>
+            <label className="text-[11px] text-slate-400 block mb-1">Título do Ritual</label>
             <input
               type="text"
               required
-              placeholder="e.g., 20-min Zone 2 Cardio"
+              placeholder="ex: 20 min de Caminhada / Cardio Zona 2"
               value={newTitle}
               onChange={(e) => setNewTitle(e.target.value)}
               className="w-full px-3 py-2 text-xs rounded-lg bg-[#0b1326] border border-slate-700 text-white focus:outline-none focus:border-indigo-500"
@@ -125,7 +125,7 @@ export const HabitsProtocols: React.FC<HabitsProtocolsProps> = ({
 
           <div className="grid grid-cols-2 gap-2">
             <div>
-              <label className="text-[11px] text-slate-400 block mb-1">Target Time</label>
+              <label className="text-[11px] text-slate-400 block mb-1">Horário Alvo</label>
               <input
                 type="time"
                 value={newTargetTime}
@@ -134,7 +134,7 @@ export const HabitsProtocols: React.FC<HabitsProtocolsProps> = ({
               />
             </div>
             <div>
-              <label className="text-[11px] text-slate-400 block mb-1">Category</label>
+              <label className="text-[11px] text-slate-400 block mb-1">Categoria</label>
               <select
                 value={newCategory}
                 onChange={(e) => setNewCategory(e.target.value as BlockCategory)}
@@ -153,7 +153,7 @@ export const HabitsProtocols: React.FC<HabitsProtocolsProps> = ({
             type="submit"
             className="w-full py-2 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold transition-colors"
           >
-            Save Protocol
+            Salvar Protocolo
           </button>
         </form>
       )}
