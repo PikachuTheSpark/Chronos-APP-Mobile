@@ -1,9 +1,11 @@
-import { TimeBlock, HabitProtocol, FocusSession } from '../types';
+import { TimeBlock, HabitProtocol, FocusSession, UserProfile } from '../types';
 
 const STORAGE_KEYS = {
   BLOCKS: 'chronos_blocks_v1',
   PROTOCOLS: 'chronos_protocols_v1',
   SESSIONS: 'chronos_sessions_v1',
+  PROFILES: 'chronos_profiles_v1',
+  ACTIVE_PROFILE: 'chronos_active_profile_v1',
   SETTINGS: 'chronos_settings_v1',
 };
 
@@ -156,10 +158,30 @@ export function getInitialProtocols(todayKey: string): HabitProtocol[] {
   ];
 }
 
-// Storage helpers
-export function loadBlocks(todayKey: string): TimeBlock[] {
+export const DEFAULT_PROFILES: UserProfile[] = [
+  {
+    id: 'prof-1',
+    name: 'Caio Eduardo',
+    email: 'caioeduardopn150@gmail.com',
+    avatarColor: '#6366f1',
+    roleTitle: 'Engenheiro de Software',
+    dailyFocusGoalHours: 4,
+    createdAt: Date.now() - 86400000 * 7,
+  },
+  {
+    id: 'prof-2',
+    name: 'Perfil Pessoal',
+    email: 'pessoal@chronos.app',
+    avatarColor: '#0ea5e9',
+    roleTitle: 'Estudos & Hábitos',
+    dailyFocusGoalHours: 2,
+    createdAt: Date.now() - 86400000 * 3,
+  },
+];
+
+export function loadProfiles(): UserProfile[] {
   try {
-    const raw = localStorage.getItem(STORAGE_KEYS.BLOCKS);
+    const raw = localStorage.getItem(STORAGE_KEYS.PROFILES);
     if (raw) {
       const parsed = JSON.parse(raw);
       if (Array.isArray(parsed) && parsed.length > 0) return parsed;
@@ -167,45 +189,157 @@ export function loadBlocks(todayKey: string): TimeBlock[] {
   } catch {
     // fallback
   }
-  const seeds = getInitialSeedBlocks(todayKey);
-  saveBlocks(seeds);
-  return seeds;
+  saveProfiles(DEFAULT_PROFILES);
+  return DEFAULT_PROFILES;
 }
 
-export function saveBlocks(blocks: TimeBlock[]): void {
+export function saveProfiles(profiles: UserProfile[]): void {
   try {
-    localStorage.setItem(STORAGE_KEYS.BLOCKS, JSON.stringify(blocks));
+    localStorage.setItem(STORAGE_KEYS.PROFILES, JSON.stringify(profiles));
   } catch {
     // ignore
   }
 }
 
-export function loadProtocols(todayKey: string): HabitProtocol[] {
+export function getActiveProfileId(): string {
   try {
-    const raw = localStorage.getItem(STORAGE_KEYS.PROTOCOLS);
+    const active = localStorage.getItem(STORAGE_KEYS.ACTIVE_PROFILE);
+    if (active) return active;
+  } catch {
+    // fallback
+  }
+  return DEFAULT_PROFILES[0].id;
+}
+
+export function setActiveProfileId(profileId: string): void {
+  try {
+    localStorage.setItem(STORAGE_KEYS.ACTIVE_PROFILE, profileId);
+  } catch {
+    // ignore
+  }
+}
+
+// Storage helpers scoped by profile
+export function loadBlocks(todayKey: string, profileId?: string): TimeBlock[] {
+  const pid = profileId || getActiveProfileId();
+  const profileKey = `${STORAGE_KEYS.BLOCKS}_${pid}`;
+  try {
+    const raw = localStorage.getItem(profileKey);
     if (raw) {
       const parsed = JSON.parse(raw);
-      if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+      if (Array.isArray(parsed)) return parsed;
+    }
+    // Also check legacy storage for default profile
+    if (pid === 'prof-1') {
+      const legacy = localStorage.getItem(STORAGE_KEYS.BLOCKS);
+      if (legacy) {
+        const parsedLegacy = JSON.parse(legacy);
+        if (Array.isArray(parsedLegacy) && parsedLegacy.length > 0) {
+          saveBlocks(parsedLegacy, pid);
+          return parsedLegacy;
+        }
+      }
     }
   } catch {
     // fallback
   }
-  const seeds = getInitialProtocols(todayKey);
-  saveProtocols(seeds);
+  // If first profile, provide initial seed blocks; otherwise provide starter set
+  const seeds = pid === 'prof-1' ? getInitialSeedBlocks(todayKey) : [
+    {
+      id: `block-${pid}-1`,
+      title: 'Leitura & Aprendizado Autônomo',
+      category: 'deep_work' as const,
+      startTime: '09:00',
+      endTime: '10:30',
+      durationMinutes: 90,
+      date: todayKey,
+      completed: false,
+      notes: 'Capítulo sobre modelos mentais e hábitos de foco',
+    },
+    {
+      id: `block-${pid}-2`,
+      title: 'Treino de Força & Alongamento',
+      category: 'recovery' as const,
+      startTime: '17:30',
+      endTime: '18:30',
+      durationMinutes: 60,
+      date: todayKey,
+      completed: false,
+    },
+  ];
+  saveBlocks(seeds, pid);
   return seeds;
 }
 
-export function saveProtocols(protocols: HabitProtocol[]): void {
+export function saveBlocks(blocks: TimeBlock[], profileId?: string): void {
+  const pid = profileId || getActiveProfileId();
+  const profileKey = `${STORAGE_KEYS.BLOCKS}_${pid}`;
   try {
-    localStorage.setItem(STORAGE_KEYS.PROTOCOLS, JSON.stringify(protocols));
+    localStorage.setItem(profileKey, JSON.stringify(blocks));
   } catch {
     // ignore
   }
 }
 
-export function loadSessions(): FocusSession[] {
+export function loadProtocols(todayKey: string, profileId?: string): HabitProtocol[] {
+  const pid = profileId || getActiveProfileId();
+  const profileKey = `${STORAGE_KEYS.PROTOCOLS}_${pid}`;
   try {
-    const raw = localStorage.getItem(STORAGE_KEYS.SESSIONS);
+    const raw = localStorage.getItem(profileKey);
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      if (Array.isArray(parsed)) return parsed;
+    }
+    if (pid === 'prof-1') {
+      const legacy = localStorage.getItem(STORAGE_KEYS.PROTOCOLS);
+      if (legacy) {
+        const parsedLegacy = JSON.parse(legacy);
+        if (Array.isArray(parsedLegacy) && parsedLegacy.length > 0) {
+          saveProtocols(parsedLegacy, pid);
+          return parsedLegacy;
+        }
+      }
+    }
+  } catch {
+    // fallback
+  }
+  const seeds = pid === 'prof-1' ? getInitialProtocols(todayKey) : [
+    {
+      id: `proto-${pid}-1`,
+      title: 'Beber 2L de Água ao longo do dia',
+      category: 'protocol' as const,
+      streak: 3,
+      completedDates: [todayKey],
+      targetTime: '09:00',
+    },
+    {
+      id: `proto-${pid}-2`,
+      title: '30 min de Leitura Focada',
+      category: 'deep_work' as const,
+      streak: 5,
+      completedDates: [],
+      targetTime: '21:00',
+    },
+  ];
+  saveProtocols(seeds, pid);
+  return seeds;
+}
+
+export function saveProtocols(protocols: HabitProtocol[], profileId?: string): void {
+  const pid = profileId || getActiveProfileId();
+  const profileKey = `${STORAGE_KEYS.PROTOCOLS}_${pid}`;
+  try {
+    localStorage.setItem(profileKey, JSON.stringify(protocols));
+  } catch {
+    // ignore
+  }
+}
+
+export function loadSessions(profileId?: string): FocusSession[] {
+  const pid = profileId || getActiveProfileId();
+  const profileKey = `${STORAGE_KEYS.SESSIONS}_${pid}`;
+  try {
+    const raw = localStorage.getItem(profileKey);
     if (raw) {
       const parsed = JSON.parse(raw);
       if (Array.isArray(parsed)) return parsed;
@@ -213,7 +347,7 @@ export function loadSessions(): FocusSession[] {
   } catch {
     // fallback
   }
-  return [
+  return pid === 'prof-1' ? [
     {
       id: 'sess-1',
       blockTitle: 'Sprint Matinal de Arquitetura',
@@ -230,12 +364,14 @@ export function loadSessions(): FocusSession[] {
       mode: 'countdown',
       category: 'deep_work',
     },
-  ];
+  ] : [];
 }
 
-export function saveSessions(sessions: FocusSession[]): void {
+export function saveSessions(sessions: FocusSession[], profileId?: string): void {
+  const pid = profileId || getActiveProfileId();
+  const profileKey = `${STORAGE_KEYS.SESSIONS}_${pid}`;
   try {
-    localStorage.setItem(STORAGE_KEYS.SESSIONS, JSON.stringify(sessions));
+    localStorage.setItem(profileKey, JSON.stringify(sessions));
   } catch {
     // ignore
   }
@@ -274,7 +410,7 @@ export function generateICS(blocks: TimeBlock[], filename: string = 'chronos-cro
       `DTSTART:${dtStart}`,
       `DTEND:${dtEnd}`,
       `SUMMARY:${block.title}`,
-      `DESCRIPTION:${block.notes || ''} [Category: ${block.category}]`,
+      `DESCRIPTION:${block.notes || ''} [Categoria: ${block.category}]`,
       `STATUS:${block.completed ? 'COMPLETED' : 'CONFIRMED'}`,
       'END:VEVENT'
     );

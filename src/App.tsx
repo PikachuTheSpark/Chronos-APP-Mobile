@@ -5,9 +5,14 @@ import {
   FocusSession,
   BlockCategory,
   SoundscapeType,
+  UserProfile,
 } from './types';
 import {
   formatDateKey,
+  loadProfiles,
+  saveProfiles,
+  getActiveProfileId,
+  setActiveProfileId,
   loadBlocks,
   saveBlocks,
   loadProtocols,
@@ -29,9 +34,10 @@ import { AnalyticsView } from './components/AnalyticsView';
 import { BottomTabBar, TabKey } from './components/BottomTabBar';
 import { BlockModal } from './components/BlockModal';
 import { BlockDetailSheet } from './components/BlockDetailSheet';
+import { ProfileAuthModal } from './components/ProfileAuthModal';
 import { PWAInstallBanner } from './components/PWAInstallBanner';
 
-import { Plus, Flame, Clock } from 'lucide-react';
+import { Plus, Flame, Clock, User, Shield } from 'lucide-react';
 
 export default function App() {
   // Today's date key e.g. "2026-10-16"
@@ -39,10 +45,24 @@ export default function App() {
   const [selectedDate, setSelectedDate] = useState<string>(todayDateKey);
   const [currentTab, setCurrentTab] = useState<TabKey>('timeline');
 
-  // Core Data
-  const [blocks, setBlocks] = useState<TimeBlock[]>(() => loadBlocks(todayDateKey));
-  const [protocols, setProtocols] = useState<HabitProtocol[]>(() => loadProtocols(todayDateKey));
-  const [sessions, setSessions] = useState<FocusSession[]>(() => loadSessions());
+  // User Profiles Management
+  const [profiles, setProfiles] = useState<UserProfile[]>(() => loadProfiles());
+  const [activeProfileId, setActiveProfileIdState] = useState<string>(() => getActiveProfileId());
+
+  const activeProfile = useMemo(() => {
+    return profiles.find((p) => p.id === activeProfileId) || profiles[0];
+  }, [profiles, activeProfileId]);
+
+  // Core Data Scoped per Active Profile
+  const [blocks, setBlocks] = useState<TimeBlock[]>(() =>
+    loadBlocks(todayDateKey, activeProfileId)
+  );
+  const [protocols, setProtocols] = useState<HabitProtocol[]>(() =>
+    loadProtocols(todayDateKey, activeProfileId)
+  );
+  const [sessions, setSessions] = useState<FocusSession[]>(() =>
+    loadSessions(activeProfileId)
+  );
 
   // Active Focus Timer State (Shared with DynamicIsland)
   const [activeFocusBlock, setActiveFocusBlock] = useState<TimeBlock | undefined>(undefined);
@@ -56,19 +76,58 @@ export default function App() {
   const [slotInitialTime, setSlotInitialTime] = useState('09:00');
   const [selectedBlockForDetail, setSelectedBlockForDetail] = useState<TimeBlock | undefined>(undefined);
   const [blockToEdit, setBlockToEdit] = useState<TimeBlock | undefined>(undefined);
+  const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
 
-  // Sync to localStorage
+  // When switching profile, reload data for that profile
+  const handleSelectProfile = (newProfileId: string) => {
+    setActiveProfileIdState(newProfileId);
+    setActiveProfileId(newProfileId);
+
+    const profileBlocks = loadBlocks(todayDateKey, newProfileId);
+    const profileProtocols = loadProtocols(todayDateKey, newProfileId);
+    const profileSessions = loadSessions(newProfileId);
+
+    setBlocks(profileBlocks);
+    setProtocols(profileProtocols);
+    setSessions(profileSessions);
+    setActiveFocusBlock(undefined);
+    setIsTimerRunning(false);
+  };
+
+  const handleCreateProfile = (profileData: Omit<UserProfile, 'id' | 'createdAt'>) => {
+    const newProf: UserProfile = {
+      ...profileData,
+      id: `prof-${Date.now()}`,
+      createdAt: Date.now(),
+    };
+    const updatedProfiles = [...profiles, newProf];
+    setProfiles(updatedProfiles);
+    saveProfiles(updatedProfiles);
+    handleSelectProfile(newProf.id);
+  };
+
+  const handleDeleteProfile = (profileIdToDelete: string) => {
+    if (profiles.length <= 1) return;
+    const remaining = profiles.filter((p) => p.id !== profileIdToDelete);
+    setProfiles(remaining);
+    saveProfiles(remaining);
+    if (activeProfileId === profileIdToDelete) {
+      handleSelectProfile(remaining[0].id);
+    }
+  };
+
+  // Sync to localStorage scoped by active profile
   useEffect(() => {
-    saveBlocks(blocks);
-  }, [blocks]);
+    saveBlocks(blocks, activeProfileId);
+  }, [blocks, activeProfileId]);
 
   useEffect(() => {
-    saveProtocols(protocols);
-  }, [protocols]);
+    saveProtocols(protocols, activeProfileId);
+  }, [protocols, activeProfileId]);
 
   useEffect(() => {
-    saveSessions(sessions);
-  }, [sessions]);
+    saveSessions(sessions, activeProfileId);
+  }, [sessions, activeProfileId]);
 
   // Set of dates with blocks for the DateRail indicator dots
   const datesWithTasks = useMemo(() => {
@@ -236,22 +295,41 @@ export default function App() {
         <PWAInstallBanner />
 
         {/* Top App Bar Header conforming to Top Bar Contract */}
-        <header className="flex items-center justify-between px-4 py-2.5 border-b border-slate-800/80 bg-[#0b1326]/90 backdrop-blur-md shrink-0 select-none z-30">
+        <header className="flex items-center justify-between px-3.5 py-2 border-b border-slate-800/80 bg-[#0b1326]/90 backdrop-blur-md shrink-0 select-none z-30">
           {/* Brand Wordmark (Zone 1) */}
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1.5">
             <span className="font-display text-base font-bold tracking-tight text-white whitespace-nowrap">
               CHRONOS
             </span>
-            <span className="text-[11px] font-mono-numbers text-indigo-400 bg-indigo-950/70 border border-indigo-800/40 px-1.5 py-0.2 rounded">
+            <span className="text-[10px] font-mono-numbers text-indigo-400 bg-indigo-950/70 border border-indigo-800/40 px-1.5 py-0.2 rounded font-semibold">
               PRECISÃO
             </span>
           </div>
 
-          {/* Quick Metrics / Status (Zone 2) */}
-          <div className="flex items-center gap-2 text-xs">
+          {/* User Profile / Login Button & Quick Metrics (Zone 2) */}
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => {
+                triggerHaptic('light');
+                setIsProfileModalOpen(true);
+              }}
+              className="flex items-center gap-1.5 px-2 py-1 rounded-xl bg-[#131b2e] hover:bg-[#1e293b] border border-slate-700/80 transition-all text-xs active:scale-95 shadow-xs"
+              title="Perfil & Login"
+            >
+              <div
+                style={{ backgroundColor: activeProfile.avatarColor }}
+                className="w-5 h-5 rounded-lg flex items-center justify-center font-bold text-[10px] text-white shrink-0 shadow-xs"
+              >
+                {activeProfile.name.slice(0, 1).toUpperCase()}
+              </div>
+              <span className="text-[11px] font-semibold text-slate-200 max-w-[80px] truncate">
+                {activeProfile.name.split(' ')[0]}
+              </span>
+            </button>
+
             <div className="flex items-center gap-1 text-amber-400 font-mono-numbers text-[11px]">
               <Flame className="w-3.5 h-3.5 fill-current" />
-              <span>{totalHabitsCompletedToday} hábitos</span>
+              <span>{totalHabitsCompletedToday}</span>
             </div>
           </div>
 
@@ -326,6 +404,8 @@ export default function App() {
             <AnalyticsView
               blocks={blocks}
               sessions={sessions}
+              activeProfile={activeProfile}
+              onOpenProfileModal={() => setIsProfileModalOpen(true)}
               onResetSeedData={handleResetSeedData}
             />
           )}
@@ -369,6 +449,17 @@ export default function App() {
             setIsCreateModalOpen(true);
           }}
           onDelete={handleDeleteBlock}
+        />
+
+        {/* Profile & Login Authentication Modal */}
+        <ProfileAuthModal
+          isOpen={isProfileModalOpen}
+          onClose={() => setIsProfileModalOpen(false)}
+          profiles={profiles}
+          activeProfile={activeProfile}
+          onSelectProfile={handleSelectProfile}
+          onCreateProfile={handleCreateProfile}
+          onDeleteProfile={handleDeleteProfile}
         />
       </div>
     </PhoneSimulator>

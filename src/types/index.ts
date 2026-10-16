@@ -32,6 +32,17 @@ export interface FocusSession {
   category: BlockCategory;
 }
 
+export interface UserProfile {
+  id: string;
+  name: string;
+  email: string;
+  avatarUrl?: string;
+  avatarColor: string;
+  roleTitle?: string;
+  dailyFocusGoalHours: number;
+  createdAt: number;
+}
+
 export type SoundscapeType = 'none' | 'rain' | 'binaural_gamma' | 'deep_space' | 'cyber_fan';
 
 export interface CategoryMetadata {

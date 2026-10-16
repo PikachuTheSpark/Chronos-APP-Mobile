@@ -1,5 +1,5 @@
 import React from 'react';
-import { TimeBlock, FocusSession, CATEGORIES, BlockCategory } from '../types';
+import { TimeBlock, FocusSession, CATEGORIES, BlockCategory, UserProfile } from '../types';
 import { generateICS } from '../utils/storage';
 import { triggerHaptic } from '../utils/audio';
 import {
@@ -12,11 +12,15 @@ import {
   RotateCcw,
   ShieldCheck,
   Smartphone,
+  User,
+  Target,
 } from 'lucide-react';
 
 interface AnalyticsViewProps {
   blocks: TimeBlock[];
   sessions: FocusSession[];
+  activeProfile?: UserProfile;
+  onOpenProfileModal?: () => void;
   onResetSeedData: () => void;
   onOpenPWAInstall?: () => void;
   isPWAInstallable?: boolean;
@@ -25,6 +29,8 @@ interface AnalyticsViewProps {
 export const AnalyticsView: React.FC<AnalyticsViewProps> = ({
   blocks,
   sessions,
+  activeProfile,
+  onOpenProfileModal,
   onResetSeedData,
   onOpenPWAInstall,
   isPWAInstallable,
@@ -50,7 +56,10 @@ export const AnalyticsView: React.FC<AnalyticsViewProps> = ({
   });
 
   const totalSessionSeconds = sessions.reduce((acc, s) => acc + s.durationSeconds, 0);
-  const totalFocusHours = (totalSessionSeconds / 3600).toFixed(1);
+  const totalFocusHoursNum = totalSessionSeconds / 3600;
+  const totalFocusHours = totalFocusHoursNum.toFixed(1);
+  const goalHours = activeProfile?.dailyFocusGoalHours || 4;
+  const goalProgressPercent = Math.min(100, Math.round((totalFocusHoursNum / goalHours) * 100));
 
   const handleExportCalendar = () => {
     triggerHaptic('medium');
@@ -76,6 +85,40 @@ export const AnalyticsView: React.FC<AnalyticsViewProps> = ({
           <span>Exportar .ICS</span>
         </button>
       </div>
+
+      {/* Active Profile Telemetry Banner */}
+      {activeProfile && (
+        <div className="p-3.5 mb-4 rounded-2xl bg-[#131b2e] border border-slate-800 flex items-center justify-between">
+          <div className="flex items-center gap-2.5 min-w-0">
+            <div
+              style={{ backgroundColor: activeProfile.avatarColor }}
+              className="w-9 h-9 rounded-xl flex items-center justify-center font-bold text-xs text-white shrink-0"
+            >
+              {activeProfile.name.slice(0, 1).toUpperCase()}
+            </div>
+            <div className="min-w-0">
+              <span className="text-xs font-bold text-white block truncate">
+                Perfil: {activeProfile.name}
+              </span>
+              <span className="text-[11px] text-slate-400 block truncate">
+                Meta: {goalHours}h diárias ({goalProgressPercent}% atingido)
+              </span>
+            </div>
+          </div>
+
+          {onOpenProfileModal && (
+            <button
+              onClick={() => {
+                triggerHaptic('light');
+                onOpenProfileModal();
+              }}
+              className="text-[11px] font-semibold text-indigo-400 hover:text-indigo-300 px-2.5 py-1 rounded-lg bg-indigo-950/60 border border-indigo-800/40 shrink-0"
+            >
+              Trocar Perfil
+            </button>
+          )}
+        </div>
+      )}
 
       {/* KPI Cards Row */}
       <div className="grid grid-cols-2 gap-2.5 mb-4">
